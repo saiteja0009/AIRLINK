@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AIRLINK | Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7fbff,
+                    #eef7ff,
+                    #e8f4ff
+                );
+
+            color: #172b4d;
+            min-height: 100vh;
+        }
+
+
+        /* NAVBAR */
+
+        .admin-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 55px;
+
+            background: rgba(255,255,255,0.96);
+
+            border-bottom: 1px solid #e1eaf4;
+
+            box-shadow:
+                0 3px 15px rgba(30,80,130,0.08);
+        }
+
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 25px;
+            font-weight: 800;
+
+            color: #1769e0;
+        }
+
+
+        .admin-logo-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1685ff,
+                    #3b9cff
+                );
+
+            color: white;
+
+            box-shadow:
+                0 6px 15px rgba(30,120,255,0.25);
+        }
+
+
+        .admin-logo span {
+            color: #11bfa5;
+        }
+
+
+        .admin-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .admin-nav-links a {
+            text-decoration: none;
+
+            padding: 9px 14px;
+
+            border-radius: 9px;
+
+            color: #536a85;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            transition: 0.25s;
+        }
+
+
+        .admin-nav-links a:hover {
+            color: #1677ff;
+            background: #eef6ff;
+        }
+
+
+        .logout-btn {
+            color: #e04f5f !important;
+
+            background: #fff1f2;
+        }
+
+
+        /* MAIN */
+
+        .admin-container {
+
+            width: 90%;
+            max-width: 1150px;
+
+            margin: 45px auto;
+        }
+
+
+        .admin-header {
+            margin-bottom: 28px;
+        }
+
+
+        .admin-header h1 {
+            margin: 0 0 7px;
+
+            font-size: 30px;
+
+            color: #172b4d;
+        }
+
+
+        .admin-header p {
+            margin: 0;
+
+            color: #7c91aa;
+
+            font-size: 13px;
+        }
+
+
+        /* STAT CARDS */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .stat-card {
+
+            padding: 25px;
+
+            background: white;
+
+            border: 1px solid #dfebf6;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 25px rgba(30,80,130,0.07);
+
+            transition: 0.25s;
+        }
+
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 14px 30px rgba(30,80,130,0.11);
+        }
+
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+
+        .stat-icon {
+
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            font-size: 20px;
+        }
+
+
+        .blue-icon {
+            background: #eaf3ff;
+            color: #1473ff;
+        }
+
+
+        .green-icon {
+            background: #e8faf1;
+            color: #16a765;
+        }
+
+
+        .purple-icon {
+            background: #f0eaff;
+            color: #8054e8;
+        }
+
+
+        .stat-label {
+
+            color: #8497ae;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .stat-value {
+
+            margin-top: 7px;
+
+            color: #172b4d;
+
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+
+        /* CONTENT */
+
+        .dashboard-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr
+                1fr;
+
+            gap: 20px;
+        }
+
+
+        .dashboard-card {
+
+            padding: 25px;
+
+            background: white;
+
+            border: 1px solid #dfebf6;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 25px rgba(30,80,130,0.07);
+        }
+
+
+        .dashboard-card h2 {
+
+            margin: 0 0 20px;
+
+            color: #172b4d;
+
+            font-size: 17px;
+        }
+
+
+        /* AIRLINE DATA */
+
+        .airline-row {
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid #edf2f7;
+        }
+
+
+        .airline-name {
+
+            color: #526982;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        .airline-count {
+
+            min-width: 35px;
+
+            padding: 5px 9px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            background: #eaf3ff;
+
+            color: #1473ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .top-airline {
+
+            padding: 20px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #edf7ff,
+                    #f3fbff
+                );
+
+            border: 1px solid #dcecff;
+
+            text-align: center;
+        }
+
+
+        .top-airline-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .top-airline-label {
+
+            color: #8194aa;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .top-airline-name {
+
+            margin-top: 6px;
+
+            color: #1473ff;
+
+            font-size: 21px;
+
+            font-weight: 800;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:850px) {
+
+            .admin-navbar {
+                padding: 15px 20px;
+            }
+
+            .admin-nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media(max-width:500px) {
+
+            .admin-container {
+                width: 92%;
+                margin-top: 30px;
+            }
+
+            .admin-header h1 {
+                font-size: 25px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<div class="admin-navbar">
+
+    <div class="admin-logo">
+
+        <div class="admin-logo-icon">
+            ✈
+        </div>
+
+        AIR<span>LINK</span>
+
+    </div>
+
+
+    <div class="admin-nav-links">
+
+        <a href="/home">
+            Home
+        </a>
+
+        <a href="/booking-status">
+            Status
+        </a>
+
+        <a href="/history">
+            History
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <a href="/logout"
+           class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="admin-container">
+
+
+    <div class="admin-header">
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+        <p>
+            Monitor AIRLINK bookings, revenue and airline activity.
+        </p>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon blue-icon">
+                    📋
+                </div>
+
+                <div>
+
+                    <div class="stat-label">
+                        TOTAL BOOKINGS
+                    </div>
+
+                    <div class="stat-value">
+                        {{ total_bookings }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon green-icon">
+                    ₹
+                </div>
+
+                <div>
+
+                    <div class="stat-label">
+                        TOTAL REVENUE
+                    </div>
+
+                    <div class="stat-value">
+                        ₹ {{ total_revenue }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon purple-icon">
+                    ✈
+                </div>
+
+                <div>
+
+                    <div class="stat-label">
+                        TOP AIRLINE
+                    </div>
+
+                    <div class="stat-value">
+                        {{ top_airline }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DASHBOARD CONTENT -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- AIRLINE BOOKINGS -->
+
+        <div class="dashboard-card">
+
+            <h2>
+                ✈ Airline Booking Activity
+            </h2>
+
+
+            {% if airline_data %}
+
+                {% for airline, count in airline_data.items() %}
+
+                <div class="airline-row">
+
+                    <div class="airline-name">
+                        {{ airline }}
+                    </div>
+
+                    <div class="airline-count">
+                        {{ count }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p style="color:#8497ae;font-size:12px;">
+                    No booking data available yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- TOP AIRLINE -->
+
+        <div class="dashboard-card">
+
+            <h2>
+                🏆 Most Booked Airline
+            </h2>
+
+
+            <div class="top-airline">
+
+                <div class="top-airline-icon">
+                    ✈️
+                </div>
+
+                <div class="top-airline-label">
+                    Most Booked
+                </div>
+
+                <div class="top-airline-name">
+                    {{ top_airline }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

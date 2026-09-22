@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AIRLINK | Booking History</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                'Segoe UI',
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fcff,
+                    #eef7ff,
+                    #e8f4ff
+                );
+
+            color: #172b4d;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+
+            height: 72px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 0 55px;
+
+            background: rgba(255,255,255,0.97);
+
+            border-bottom: 1px solid #e3edf7;
+
+            box-shadow:
+                0 3px 15px rgba(40,90,140,0.08);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            color: #1769e0;
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #45a1ff
+                );
+
+            color: white;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 6px 15px
+                rgba(22,119,255,0.24);
+        }
+
+
+        .logo span {
+            color: #12bfa5;
+        }
+
+
+        /* NAVIGATION */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 27px;
+        }
+
+
+        .nav-links a {
+
+            text-decoration: none;
+
+            color: #4e6380;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: #1677ff;
+        }
+
+
+        .active {
+
+            color: #1677ff !important;
+
+            background: #edf5ff;
+
+            padding: 9px 14px;
+
+            border-radius: 9px;
+
+            font-weight: 600 !important;
+        }
+
+
+        /* ================================
+           MAIN PAGE
+        ================================= */
+
+        .page-container {
+
+            width: 88%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 55px 0 80px;
+        }
+
+
+        .page-badge {
+
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            background: #e9f4ff;
+
+            color: #1677ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .page-title {
+
+            margin: 0;
+
+            font-size: 34px;
+
+            color: #172b4d;
+        }
+
+
+        .page-subtitle {
+
+            margin-top: 9px;
+
+            margin-bottom: 32px;
+
+            color: #7186a2;
+
+            font-size: 14px;
+        }
+
+
+        /* ================================
+           SUMMARY
+        ================================= */
+
+        .summary-card {
+
+            background: white;
+
+            border: 1px solid #e1edf8;
+
+            border-radius: 18px;
+
+            padding: 22px 25px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(40,100,160,0.07);
+        }
+
+
+        .summary-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .summary-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background: #edf5ff;
+
+            color: #1677ff;
+
+            font-size: 22px;
+        }
+
+
+        .summary-text h3 {
+
+            margin: 0;
+
+            font-size: 16px;
+
+            color: #243b53;
+        }
+
+
+        .summary-text p {
+
+            margin: 4px 0 0;
+
+            color: #8295aa;
+
+            font-size: 12px;
+        }
+
+
+        .history-count {
+
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            background: #f1edff;
+
+            color: #7657d9;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================
+           HISTORY GRID
+        ================================= */
+
+        .history-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+
+        .history-card {
+
+            background: white;
+
+            border: 1px solid #e1edf8;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(40,100,160,0.08);
+
+            transition: 0.25s;
+        }
+
+
+        .history-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(40,100,160,0.13);
+        }
+
+
+        /* ================================
+           CARD HEADER
+        ================================= */
+
+        .card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #edf2f7;
+
+            margin-bottom: 18px;
+        }
+
+
+        .flight-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            border-radius: 12px;
+
+            background: #edf5ff;
+
+            color: #1677ff;
+
+            font-size: 19px;
+        }
+
+
+        .booking-id {
+
+            color: #1677ff;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .completed {
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            background: #e9fbf7;
+
+            color: #0da98b;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================
+           ROUTE
+        ================================= */
+
+        .route-section {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+
+        .location {
+
+            width: 42%;
+        }
+
+
+        .location-label {
+
+            font-size: 10px;
+
+            color: #8b9db1;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .location-name {
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            color: #263c57;
+        }
+
+
+        .route-line {
+
+            flex: 1;
+
+            height: 1px;
+
+            background: #d9e8f6;
+
+            margin: 0 12px;
+
+            position: relative;
+        }
+
+
+        .route-line::after {
+
+            content: "✈";
+
+            position: absolute;
+
+            left: 50%;
+
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            background: white;
+
+            padding: 5px;
+
+            color: #1677ff;
+
+            font-size: 14px;
+        }
+
+
+        /* ================================
+           DETAILS
+        ================================= */
+
+        .details {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .detail-box {
+
+            background: #f7fbff;
+
+            border: 1px solid #eaf2f9;
+
+            border-radius: 10px;
+
+            padding: 12px;
+        }
+
+
+        .detail-label {
+
+            font-size: 10px;
+
+            color: #8a9cb1;
+
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .detail-value {
+
+            font-size: 13px;
+
+            color: #304863;
+
+            font-weight: 600;
+
+        }
+
+
+        /* ================================
+           FARE
+        ================================= */
+
+        .fare-section {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #edf2f7;
+        }
+
+
+        .fare-label {
+
+            font-size: 11px;
+
+            color: #8a9cb1;
+        }
+
+
+        .fare {
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+            color: #1677ff;
+        }
+
+
+        /* ================================
+           EMPTY STATE
+        ================================= */
+
+        .empty-state {
+
+            background: white;
+
+            border: 1px solid #e1edf8;
+
+            border-radius: 18px;
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px
+                rgba(40,100,160,0.07);
+        }
+
+
+        .empty-icon {
+
+            font-size: 48px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .empty-state h3 {
+
+            margin: 0 0 8px;
+
+            color: #344b66;
+        }
+
+
+        .empty-state p {
+
+            color: #8295aa;
+
+            font-size: 13px;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media(max-width: 850px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .nav-links {
+
+                display: none;
+            }
+
+            .page-container {
+
+                width: 92%;
+
+                padding-top: 35px;
+            }
+
+            .history-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+
+                font-size: 28px;
+            }
+
+        }
+
+
+        @media(max-width: 550px) {
+
+            .summary-card {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .route-section {
+
+                flex-wrap: wrap;
+            }
+
+            .details {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================
+     NAVBAR
+================================ -->
+
+<div class="navbar">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ✈
+        </div>
+
+        AIR<span>LINK</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/home">
+            Home
+        </a>
+
+        <a href="/booking-status">
+            Status
+        </a>
+
+        <a href="/history"
+           class="active">
+            History
+        </a>
+
+        <a href="/support">
+            Support
+        </a>
+
+        <a href="/admin">
+            Admin
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <a href="/login">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<div class="page-container">
+
+
+    <div class="page-badge">
+        ✈ TRAVEL RECORDS
+    </div>
+
+
+    <h1 class="page-title">
+        Booking History
+    </h1>
+
+
+    <p class="page-subtitle">
+        View all your previous flight bookings and travel details.
+    </p>
+
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-card">
+
+
+        <div class="summary-left">
+
+
+            <div class="summary-icon">
+                🧳
+            </div>
+
+
+            <div class="summary-text">
+
+                <h3>
+                    Your Travel History
+                </h3>
+
+                <p>
+                    A complete record of your previous reservations
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="history-count">
+            ● Previous Bookings
+        </div>
+
+
+    </div>
+
+
+
+    {% if bookings %}
+
+
+    <!-- HISTORY CARDS -->
+
+    <div class="history-grid">
+
+
+        {% for b in bookings %}
+
+
+        <div class="history-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-header">
+
+
+                <div style="display:flex;align-items:center;gap:12px;">
+
+                    <div class="flight-icon">
+                        ✈
+                    </div>
+
+                    <div>
+
+                        <div class="booking-id">
+                            {{ b.booking_id }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="completed">
+                    ✓ Completed
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ROUTE -->
+
+            <div class="route-section">
+
+
+                <div class="location">
+
+                    <div class="location-label">
+                        From
+                    </div>
+
+                    <div class="location-name">
+                        {{ b.source }}
+                    </div>
+
+                </div>
+
+
+                <div class="route-line"></div>
+
+
+                <div class="location">
+
+                    <div class="location-label">
+                        To
+                    </div>
+
+                    <div class="location-name">
+                        {{ b.destination }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DETAILS -->
+
+            <div class="details">
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Passenger
+                    </div>
+
+                    <div class="detail-value">
+                        {{ b.passenger }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Airline
+                    </div>
+
+                    <div class="detail-value">
+                        {{ b.airline }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-label">
+                        Seat
+                    </div>
+
+                    <div class="detail-value">
+                        {{ b.seat }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FARE -->
+
+            <div class="fare-section">
+
+
+                <div>
+
+                    <div class="fare-label">
+                        TOTAL FARE
+                    </div>
+
+                    <div class="fare">
+                        ₹ {{ b.price }}
+                    </div>
+
+                </div>
+
+
+                <div style="color:#12bfa5;font-size:12px;font-weight:600;">
+                    ✓ Booking Confirmed
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- EMPTY -->
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            🧳
+        </div>
+
+        <h3>
+            No Booking History
+        </h3>
+
+        <p>
+            Your previous flight bookings will appear here.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

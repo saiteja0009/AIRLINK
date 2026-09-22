@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AIRLINK | Booking Status</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                'Segoe UI',
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fcff,
+                    #eef7ff,
+                    #e8f4ff
+                );
+
+            color: #172b4d;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+
+            height: 72px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 0 55px;
+
+            background: rgba(255,255,255,0.97);
+
+            border-bottom: 1px solid #e3edf7;
+
+            box-shadow:
+                0 3px 15px rgba(40,90,140,0.08);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            color: #1769e0;
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #45a1ff
+                );
+
+            color: white;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 6px 15px
+                rgba(22,119,255,0.24);
+        }
+
+
+        .logo span {
+            color: #12bfa5;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 27px;
+        }
+
+
+        .nav-links a {
+
+            text-decoration: none;
+
+            color: #4e6380;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: #1677ff;
+        }
+
+
+        .active {
+
+            color: #1677ff !important;
+
+            background: #edf5ff;
+
+            padding: 9px 14px;
+
+            border-radius: 9px;
+
+            font-weight: 600 !important;
+        }
+
+
+        /* ================================
+           PAGE
+        ================================= */
+
+        .page-container {
+
+            width: 88%;
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 55px 0 80px;
+        }
+
+
+        .page-badge {
+
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            background: #e9f4ff;
+
+            color: #1677ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .page-title {
+
+            margin: 0;
+
+            font-size: 34px;
+
+            color: #172b4d;
+        }
+
+
+        .page-subtitle {
+
+            margin-top: 9px;
+
+            margin-bottom: 32px;
+
+            color: #7186a2;
+
+            font-size: 14px;
+        }
+
+
+        /* ================================
+           SUMMARY CARD
+        ================================= */
+
+        .summary-card {
+
+            background: white;
+
+            border: 1px solid #e1edf8;
+
+            border-radius: 18px;
+
+            padding: 22px 25px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(40,100,160,0.07);
+        }
+
+
+        .summary-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .summary-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background: #e9f4ff;
+
+            color: #1677ff;
+
+            font-size: 22px;
+        }
+
+
+        .summary-text h3 {
+
+            margin: 0;
+
+            font-size: 16px;
+
+            color: #243b53;
+        }
+
+
+        .summary-text p {
+
+            margin: 4px 0 0;
+
+            color: #8295aa;
+
+            font-size: 12px;
+        }
+
+
+        .booking-count {
+
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            background: #e9fbf7;
+
+            color: #0fa88e;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================
+           TABLE CARD
+        ================================= */
+
+        .table-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            border: 1px solid #e1edf8;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 12px 35px
+                rgba(40,100,160,0.09);
+        }
+
+
+        .table-header {
+
+            padding: 22px 25px;
+
+            border-bottom: 1px solid #edf2f7;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .table-header h3 {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            color: #243b53;
+        }
+
+
+        .table-header span {
+
+            color: #8a9cb1;
+
+            font-size: 12px;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+
+        thead {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #328fff
+                );
+        }
+
+
+        th {
+
+            padding: 16px 18px;
+
+            text-align: left;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        td {
+
+            padding: 17px 18px;
+
+            border-bottom: 1px solid #edf2f7;
+
+            color: #435872;
+
+            font-size: 13px;
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s;
+        }
+
+
+        tbody tr:hover {
+
+            background: #f7fbff;
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        .booking-id {
+
+            color: #1677ff;
+
+            font-weight: 700;
+        }
+
+
+        .passenger {
+
+            font-weight: 600;
+
+            color: #263c57;
+        }
+
+
+        .route {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-weight: 500;
+        }
+
+
+        .arrow {
+
+            color: #1677ff;
+
+            font-weight: bold;
+        }
+
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background: #e9fbf7;
+
+            color: #0eaa8e;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #18c6a5;
+        }
+
+
+        /* ================================
+           DOWNLOAD BUTTON
+        ================================= */
+
+        .download-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 9px 14px;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #399aff
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 5px 12px
+                rgba(22,119,255,0.18);
+
+            transition: 0.25s;
+        }
+
+
+        .download-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px
+                rgba(22,119,255,0.28);
+        }
+
+
+        /* ================================
+           EMPTY STATE
+        ================================= */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 55px 20px;
+
+            color: #8193aa;
+        }
+
+
+        .empty-icon {
+
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .empty-state h3 {
+
+            color: #344b66;
+
+            margin: 0 0 7px;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media(max-width: 850px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .nav-links {
+
+                display: none;
+            }
+
+            .page-container {
+
+                width: 92%;
+
+                padding-top: 35px;
+            }
+
+            .page-title {
+
+                font-size: 28px;
+            }
+
+            .table-card {
+
+                overflow-x: auto;
+            }
+
+            table {
+
+                min-width: 750px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================
+     NAVBAR
+================================ -->
+
+<div class="navbar">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ✈
+        </div>
+
+        AIR<span>LINK</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/home">
+            Home
+        </a>
+
+        <a href="/booking-status"
+           class="active">
+            Status
+        </a>
+
+        <a href="/history">
+            History
+        </a>
+
+        <a href="/support">
+            Support
+        </a>
+
+        <a href="/admin">
+            Admin
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <a href="/login">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<div class="page-container">
+
+
+    <div class="page-badge">
+        ✈ BOOKING MANAGEMENT
+    </div>
+
+
+    <h1 class="page-title">
+        Booking Status
+    </h1>
+
+
+    <p class="page-subtitle">
+        Track your current flight bookings and download your tickets.
+    </p>
+
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-card">
+
+
+        <div class="summary-left">
+
+
+            <div class="summary-icon">
+                📋
+            </div>
+
+
+            <div class="summary-text">
+
+                <h3>
+                    Current Bookings
+                </h3>
+
+                <p>
+                    View the latest status of your reservations
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="booking-count">
+            ● Active Bookings
+        </div>
+
+
+    </div>
+
+
+
+    <!-- TABLE -->
+
+    <div class="table-card">
+
+
+        <div class="table-header">
+
+            <h3>
+                Your Reservations
+            </h3>
+
+            <span>
+                AIRLINK Flight Management
+            </span>
+
+        </div>
+
+
+        {% if bookings %}
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Booking ID
+                    </th>
+
+                    <th>
+                        Passenger
+                    </th>
+
+                    <th>
+                        From
+                    </th>
+
+                    <th>
+                        To
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Ticket
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for booking in bookings %}
+
+
+                <tr>
+
+
+                    <td>
+
+                        <span class="booking-id">
+                            {{ booking.booking_id }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="passenger">
+                            {{ booking.passenger_name }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ booking.source }}
+                    </td>
+
+
+                    <td>
+                        {{ booking.destination }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="status">
+
+                            <span class="status-dot"></span>
+
+                            {{ booking.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <a
+                            href="/download-ticket/{{ booking.booking_id }}"
+                            class="download-btn">
+
+                            ↓ Download Ticket
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+        {% else %}
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                ✈️
+            </div>
+
+            <h3>
+                No Current Bookings
+            </h3>
+
+            <p>
+                You don't have any active flight bookings yet.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
